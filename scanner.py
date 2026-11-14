@@ -7,11 +7,19 @@ def check_port(host,port, timeout) -> bool:
     result = s.connect_ex((host, port))
     s.close()
     return result == 0
-    
+
+def scan_range(host, start, end, timeout):
+    open_ports = []
+    for port in range(start,end):
+        if check_port(host, port, timeout):
+            open_ports.append(port)
+    return open_ports
+
+
 
 
 host = "127.0.0.1" 
-port = 8000
 timeout = 1.0
 
-print(f"{host}::{port} --> {check_port(host,port, timeout)}")
+for port in scan_range(host, 7990, 8010, timeout):
+    print(f"{host}::{port} --> OPEN")

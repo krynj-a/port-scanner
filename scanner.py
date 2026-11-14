@@ -27,5 +27,9 @@ try:
 except socket.gaierror:
     sys.exit(f"The hostname: \"{host}\" is invalid. Please correct it and try again!")    
 
-for port in scan_range(host, 7990, 8010, timeout):
-    print(f"{host}::{port} --> OPEN")
+ports = scan_range(host, 7990, 8010, timeout)
+if not ports:
+    print(f"No OPEN ports on host: {host}")
+else:
+    for port in ports:
+        print(f"{host}::{port} --> OPEN")
